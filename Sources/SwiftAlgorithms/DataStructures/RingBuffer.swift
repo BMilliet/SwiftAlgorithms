@@ -37,8 +37,10 @@ public struct RingBuffer<T> {
     }
 
     public mutating func reversed() {
-        readIndex = arr.count - readIndex
-        writeIndex = arr.count - writeIndex
+        let _readIndex = arr.count - readIndex
+        let _writeIndex = arr.count - writeIndex
+        readIndex  = _writeIndex
+        writeIndex = _readIndex
         arr = arr.reversed()
     }
 }
