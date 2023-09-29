@@ -34,6 +34,7 @@ public class TreeNode<T: Equatable> {
 
     public func search(_ value: T) -> TreeNode? {
         var node: TreeNode? = nil
+
         forEachLevelOrder {
             if $0.value == value {
                 node = $0
