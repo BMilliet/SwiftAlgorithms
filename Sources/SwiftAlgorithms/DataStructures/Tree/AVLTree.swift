@@ -1,7 +1,6 @@
+public struct AVLTree<T: Comparable> {
 
-public struct BinarySearchTree<T: Comparable> {
-
-    public var root: BinaryTreeNode<T>?
+    public var root: AVLTreeNode<T>?
 
     public init() {}
 
@@ -11,10 +10,10 @@ public struct BinarySearchTree<T: Comparable> {
     }
 
 
-    private func _insert(from node: BinaryTreeNode<T>?, _ v: T) -> BinaryTreeNode<T> {
+    private func _insert(from node: AVLTreeNode<T>?, _ v: T) -> AVLTreeNode<T> {
 
         guard let node = node else {
-            return BinaryTreeNode(value: v)
+            return AVLTreeNode(value: v)
         }
 
         if v < node.value {
@@ -32,7 +31,7 @@ public struct BinarySearchTree<T: Comparable> {
     }
 
 
-    public func find(_ value: T) -> BinaryTreeNode<T>? {
+    public func find(_ value: T) -> AVLTreeNode<T>? {
 
         var current = root
 
@@ -79,7 +78,7 @@ public struct BinarySearchTree<T: Comparable> {
     }
 
 
-    private func swap(_ oldNode: BinaryTreeNode<T>, newNode: BinaryTreeNode<T>?) {
+    private func swap(_ oldNode: AVLTreeNode<T>, newNode: AVLTreeNode<T>?) {
         newNode?.level = oldNode.level
 
         if oldNode.isLeftNode {
@@ -89,22 +88,9 @@ public struct BinarySearchTree<T: Comparable> {
         }
     }
 
-    /*
-    works but its not the best performance
+    private func balance() {
 
-    public func contains(_ value: T) -> Bool {
-        guard let root = root else { return false }
-
-        var found = false
-        root.traverseInOrder {
-            if $0.value == value {
-                found = true
-            }
-        }
-
-        return found
     }
-    */
 
     public func display() {
         print(root ?? "")
