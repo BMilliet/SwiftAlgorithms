@@ -8,11 +8,12 @@ func makeBinaryTree() -> BinaryTreeNode<Int> {
     let nine = BinaryTreeNode(value: 9)
     let seven = BinaryTreeNode(value: 7)
 
-    nine.leftChild = eight
-    one.leftChild = zero
-    one.rightChild = five
-    seven.leftChild = one
-    seven.rightChild = nine
+    seven.addRight(nine)
+    nine.addLeft(eight)
+
+    seven.addLeft(one)
+    one.addLeft(zero)
+    one.addRight(five)
 
     return seven
 }

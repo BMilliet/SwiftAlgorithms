@@ -28,13 +28,18 @@ public struct BinarySearchTree<T: Comparable> {
 
 
     public func contains(_ value: T) -> Bool {
+        return find(value) != nil
+    }
+
+
+    public func find(_ value: T) -> BinaryTreeNode<T>? {
 
         var current = root
 
         while current != nil {
 
             if current?.value == value {
-                return true
+                return current
             }
 
             if current!.value < value {
@@ -44,9 +49,43 @@ public struct BinarySearchTree<T: Comparable> {
             }
         }
 
-        return false
+        return nil
     }
 
+
+    public func remove(_ value: T) {
+        guard let target = find(value) else { return }
+
+        // is leaf
+        if target.leftChild == nil && target.rightChild == nil {
+            swap(target, newNode: nil)
+            return
+        }
+
+        if target.leftChild != nil && target.rightChild != nil {
+            guard let mostLeft = target.mostLeftNode() else {
+                return
+            }
+            swap(target, newNode: mostLeft)
+        }
+
+        if target.leftChild == nil {
+            swap(target, newNode: target.rightChild)
+            return
+        } else if target.rightChild == nil {
+            swap(target, newNode: target.leftChild)
+            return
+        }
+    }
+
+
+    private func swap(_ oldNode: BinaryTreeNode<T>, newNode: BinaryTreeNode<T>?) {
+        if oldNode.side == .left {
+            oldNode.parent?.leftChild = newNode
+        } else {
+            oldNode.parent?.rightChild = newNode
+        }
+    }
 
     /*
     works but its not the best performance
