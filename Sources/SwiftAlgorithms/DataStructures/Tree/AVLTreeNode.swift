@@ -1,13 +1,13 @@
 import Foundation
 
-public class BinaryTreeNode<T: Equatable>: Equatable {
+public class AVLTreeNode<T: Equatable>: Equatable {
 
     private let id = UUID()
     public var value: T
-    public var leftChild: BinaryTreeNode?
-    public var rightChild: BinaryTreeNode?
+    public var leftChild: AVLTreeNode?
+    public var rightChild: AVLTreeNode?
     public var level: Int = 0
-    public weak var parent: BinaryTreeNode?
+    public weak var parent: AVLTreeNode?
 
     public init(value: T) {
         self.value = value
@@ -29,39 +29,39 @@ public class BinaryTreeNode<T: Equatable>: Equatable {
         return parent == nil
     }
 
-    public func addLeft(_ node: BinaryTreeNode) {
+    public func addLeft(_ node: AVLTreeNode) {
         node.parent = self
         node.level = level + 1
         leftChild = node
     }
 
-    public func addRight(_ node: BinaryTreeNode) {
+    public func addRight(_ node: AVLTreeNode) {
         node.parent = self
         node.level = level + 1
         rightChild = node
     }
 
-    public func traverseInOrder(_ callback: (BinaryTreeNode) -> Void) {
+    public func traverseInOrder(_ callback: (AVLTreeNode) -> Void) {
         leftChild?.traverseInOrder(callback)
         callback(self)
         rightChild?.traverseInOrder(callback)
     }
 
 
-    public func traversePreOrder(_ callback: (BinaryTreeNode) -> Void) {
+    public func traversePreOrder(_ callback: (AVLTreeNode) -> Void) {
         callback(self)
         leftChild?.traversePreOrder(callback)
         rightChild?.traversePreOrder(callback)
     }
 
-    public func traversePostOrder(_ callback: (BinaryTreeNode) -> Void) {
+    public func traversePostOrder(_ callback: (AVLTreeNode) -> Void) {
         leftChild?.traversePostOrder(callback)
         rightChild?.traversePostOrder(callback)
         callback(self)
     }
 
-    public func mostLeftNode() -> BinaryTreeNode<T>? {
-        var mostLeft: BinaryTreeNode? = nil
+    public func mostLeftNode() -> AVLTreeNode<T>? {
+        var mostLeft: AVLTreeNode? = nil
 
         traversePreOrder {
 
@@ -87,7 +87,7 @@ public class BinaryTreeNode<T: Equatable>: Equatable {
         return arr
     }
 
-    public static func == (lhs: BinaryTreeNode<T>, rhs: BinaryTreeNode<T>) -> Bool {
+    public static func == (lhs: AVLTreeNode<T>, rhs: AVLTreeNode<T>) -> Bool {
         lhs.id == rhs.id
     }
 }

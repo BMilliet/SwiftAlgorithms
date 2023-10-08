@@ -57,7 +57,7 @@ public struct BinarySearchTree<T: Comparable> {
         guard let target = find(value) else { return }
 
         // is leaf
-        if target.leftChild == nil && target.rightChild == nil {
+        if target.isLeaf {
             swap(target, newNode: nil)
             return
         }
@@ -80,7 +80,9 @@ public struct BinarySearchTree<T: Comparable> {
 
 
     private func swap(_ oldNode: BinaryTreeNode<T>, newNode: BinaryTreeNode<T>?) {
-        if oldNode.side == .left {
+        newNode?.level = oldNode.level
+
+        if oldNode.isLeftNode {
             oldNode.parent?.leftChild = newNode
         } else {
             oldNode.parent?.rightChild = newNode

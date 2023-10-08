@@ -17,3 +17,15 @@ func makeBinaryTree() -> BinaryTreeNode<Int> {
 
     return seven
 }
+
+func makeBinarySearchTree() -> BinarySearchTree<Int> {
+    var tree = BinarySearchTree<Int>()
+    tree.insert(7)
+    tree.insert(9)
+    tree.insert(8)
+    tree.insert(5)
+    tree.insert(1)
+    tree.insert(0)
+
+    return tree
+}

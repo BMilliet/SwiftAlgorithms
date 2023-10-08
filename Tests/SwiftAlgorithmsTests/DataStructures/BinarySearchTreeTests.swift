@@ -28,6 +28,25 @@ final class BinarySearchTreeTests: XCTestCase {
         XCTAssertEqual(expected, n)
     }
 
+    func test_factory() throws {
+
+        var n = [Int]()
+        let tree = makeBinarySearchTree()
+
+        tree.root?.traverseInOrder { n.append($0.value) }
+
+        let expected = [
+            0,
+            1,
+            5,
+            7,
+            8,
+            9,
+        ]
+
+        XCTAssertEqual(expected, n)
+    }
+
     func test_contains() throws {
 
         var tree = BinarySearchTree<Int>()
