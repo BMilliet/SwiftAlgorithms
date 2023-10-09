@@ -29,3 +29,15 @@ func makeBinarySearchTree() -> BinarySearchTree<Int> {
 
     return tree
 }
+
+func makeAVLTree() -> AVLTree<Int> {
+    var tree = AVLTree<Int>()
+    tree.insert(7)
+    tree.insert(9)
+    tree.insert(8)
+    tree.insert(5)
+    tree.insert(1)
+    tree.insert(0)
+
+    return tree
+}

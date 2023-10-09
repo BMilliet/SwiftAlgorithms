@@ -29,6 +29,18 @@ public class AVLTreeNode<T: Equatable>: Equatable {
         return parent == nil
     }
 
+    var hasChild: Bool {
+        return (leftChild != nil || rightChild != nil)
+    }
+
+    public func getHeight() -> Int {
+        if hasChild {
+            return max(rightChild?.getHeight() ?? 0, leftChild?.getHeight() ?? 0) + 1
+        } else {
+            return 0
+        }
+    }
+
     public func addLeft(_ node: AVLTreeNode) {
         node.parent = self
         node.level = level + 1
@@ -89,5 +101,29 @@ public class AVLTreeNode<T: Equatable>: Equatable {
 
     public static func == (lhs: AVLTreeNode<T>, rhs: AVLTreeNode<T>) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+extension AVLTreeNode: CustomStringConvertible {
+
+    public var description: String {
+        diagram(for: self)
+    }
+
+    private func diagram(for node: AVLTreeNode?,
+                         _ top: String = "",
+                         _ root: String = "",
+                         _ bottom: String = "") -> String {
+        guard let node = node else {
+            return root + "nil\n"
+        }
+        if node.leftChild == nil && node.rightChild == nil {
+            return root + "\(node.value)\n"
+        }
+        return diagram(for: node.rightChild,
+                       top + " ", top + "┌──", top + "│ ")
+        + root + "\(node.value)\n"
+        + diagram(for: node.leftChild,
+                  bottom + "│ ", bottom + "└──", bottom + " ")
     }
 }

@@ -26,6 +26,18 @@ public struct AVLTree<T: Comparable> {
     }
 
 
+    public var height: Int {
+        return root?.getHeight() ?? 0
+    }
+
+
+    public var isBalanced: Bool {
+        return (
+            (root?.leftChild?.getHeight() ?? 0) - (root?.rightChild?.getHeight() ?? 0) * -1
+        ) >= 0
+    }
+
+
     public func contains(_ value: T) -> Bool {
         return find(value) != nil
     }
