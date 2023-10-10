@@ -94,4 +94,20 @@ final class AVLTreeTests: XCTestCase {
 
         XCTAssertTrue(tree.isBalanced)
     }
+
+    func test_balance() throws {
+        var tree = AVLTree<Int>()
+
+        tree.insert(100, balanced: false)
+        tree.insert(90, balanced: false)
+        tree.insert(80, balanced: false)
+        tree.insert(70, balanced: false)
+        tree.insert(60, balanced: false)
+        tree.insert(50, balanced: false)
+
+        XCTAssertFalse(tree.isBalanced)
+
+        tree.balanceAll()
+        XCTAssertTrue(tree.isBalanced)
+    }
 }

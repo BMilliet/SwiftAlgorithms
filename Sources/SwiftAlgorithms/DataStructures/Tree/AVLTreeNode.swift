@@ -13,24 +13,29 @@ public class AVLTreeNode<T: Equatable>: Equatable {
         self.value = value
     }
 
-    var isLeaf: Bool {
+    public var isLeaf: Bool {
         return rightChild == nil && leftChild == nil
     }
 
-    var isLeftNode: Bool {
+    public var isLeftNode: Bool {
         return parent?.leftChild == self
     }
 
-    var isRightNode: Bool {
+    public var isRightNode: Bool {
         return parent?.rightChild == self
     }
 
-    var isRoot: Bool {
+    public var isRoot: Bool {
         return parent == nil
     }
 
-    var hasChild: Bool {
+    public var hasChild: Bool {
         return (leftChild != nil || rightChild != nil)
+    }
+
+    public var isBalanced: Bool {
+        let balanceFactor = abs(leftChild?.getHeight() ?? 0) - (rightChild?.getHeight() ?? 0)
+        return balanceFactor >= 0 && balanceFactor <= 1
     }
 
     public func getHeight() -> Int {

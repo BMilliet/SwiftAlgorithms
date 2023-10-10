@@ -28,13 +28,12 @@ public struct AVLTree<T: Comparable> {
 
 
     public var height: Int {
-        return root?.getHeight() ?? 0
+        root?.getHeight() ?? 0
     }
 
 
     public var isBalanced: Bool {
-        let balanceFactor = abs(root?.leftChild?.getHeight() ?? 0) - (root?.rightChild?.getHeight() ?? 0)
-        return balanceFactor >= 0 && balanceFactor <= 1
+        root?.isBalanced ?? true
     }
 
     public func contains(_ value: T) -> Bool {
@@ -104,18 +103,20 @@ public struct AVLTree<T: Comparable> {
     }
 
     mutating func balance() {
-
         // left heavy
         if root?.leftChild?.getHeight() ?? 0 > root?.rightChild?.getHeight() ?? 0 {
-
             root = rightRotation(root)
 
         // right heavy
         } else {
-
             root = leftRotation(root)
         }
+    }
 
+    mutating func balanceAll() {
+        while !root!.isBalanced {
+            balance()
+        }
     }
 
     public func rightRotation(_ node: AVLTreeNode<T>?) -> AVLTreeNode<T>? {
