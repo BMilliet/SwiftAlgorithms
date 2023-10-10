@@ -37,7 +37,7 @@ public class AVLTreeNode<T: Equatable>: Equatable {
         if hasChild {
             return max(rightChild?.getHeight() ?? 0, leftChild?.getHeight() ?? 0) + 1
         } else {
-            return 0
+            return 1
         }
     }
 

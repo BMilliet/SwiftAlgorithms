@@ -30,14 +30,14 @@ func makeBinarySearchTree() -> BinarySearchTree<Int> {
     return tree
 }
 
-func makeAVLTree() -> AVLTree<Int> {
+func makeUnbalancedAVLTree() -> AVLTree<Int> {
     var tree = AVLTree<Int>()
-    tree.insert(7)
-    tree.insert(9)
-    tree.insert(8)
-    tree.insert(5)
-    tree.insert(1)
-    tree.insert(0)
+    tree.insert(7, balanced: false)
+    tree.insert(9, balanced: false)
+    tree.insert(8, balanced: false)
+    tree.insert(5, balanced: false)
+    tree.insert(1, balanced: false)
+    tree.insert(0, balanced: false)
 
     return tree
 }

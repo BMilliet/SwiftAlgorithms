@@ -5,8 +5,9 @@ public struct AVLTree<T: Comparable> {
     public init() {}
 
 
-    public mutating func insert(_ v: T) {
+    public mutating func insert(_ v: T, balanced: Bool = true) {
         root = _insert(from: root, v)
+        if balanced { balance() }
     }
 
 
@@ -32,11 +33,9 @@ public struct AVLTree<T: Comparable> {
 
 
     public var isBalanced: Bool {
-        return (
-            (root?.leftChild?.getHeight() ?? 0) - (root?.rightChild?.getHeight() ?? 0) * -1
-        ) >= 0
+        let balanceFactor = abs(root?.leftChild?.getHeight() ?? 0) - (root?.rightChild?.getHeight() ?? 0)
+        return balanceFactor >= 0 && balanceFactor <= 1
     }
-
 
     public func contains(_ value: T) -> Bool {
         return find(value) != nil
@@ -100,11 +99,68 @@ public struct AVLTree<T: Comparable> {
         }
     }
 
-    private func balance() {
+    public func display() {
+        print(root ?? "")
+    }
+
+    mutating func balance() {
+
+        // left heavy
+        if root?.leftChild?.getHeight() ?? 0 > root?.rightChild?.getHeight() ?? 0 {
+
+            root = rightRotation(root)
+
+        // right heavy
+        } else {
+
+            root = leftRotation(root)
+        }
 
     }
 
-    public func display() {
-        print(root ?? "")
+    public func rightRotation(_ node: AVLTreeNode<T>?) -> AVLTreeNode<T>? {
+        guard let node = node else { return nil }
+
+        guard let pivot = node.leftChild else { return node }
+
+        if pivot.isLeaf {
+            node.leftChild = nil
+            pivot.rightChild = node
+            return pivot
+        }
+
+        var newPivot: AVLTreeNode<T>? = pivot
+
+        if newPivot?.leftChild == nil {
+            newPivot = leftRotation(newPivot)
+        }
+
+        node.leftChild = nil
+        newPivot?.rightChild = node
+
+        return newPivot
+    }
+
+    public func leftRotation(_ node: AVLTreeNode<T>?) -> AVLTreeNode<T>? {
+        guard let node = node else { return nil }
+
+        guard let pivot = node.rightChild else { return node }
+
+        if pivot.isLeaf {
+            node.rightChild = nil
+            pivot.leftChild = node
+            return pivot
+        }
+
+        var newPivot: AVLTreeNode<T>? = pivot
+
+        if newPivot?.rightChild == nil {
+            newPivot = rightRotation(newPivot)
+        }
+
+        node.rightChild = nil
+        newPivot?.leftChild = node
+
+        return newPivot
     }
 }
