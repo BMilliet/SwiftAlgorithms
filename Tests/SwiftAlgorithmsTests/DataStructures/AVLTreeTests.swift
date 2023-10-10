@@ -104,9 +104,22 @@ final class AVLTreeTests: XCTestCase {
         tree.insert(70, balanced: false)
         tree.insert(60, balanced: false)
         tree.insert(50, balanced: false)
+        tree.insert(40, balanced: false)
 
         XCTAssertFalse(tree.isBalanced)
+        tree.balanceAll()
+        XCTAssertTrue(tree.isBalanced)
 
+        tree = AVLTree<Int>()
+        tree.insert(40, balanced: false)
+        tree.insert(20, balanced: false)
+        tree.insert(10, balanced: false)
+        tree.insert(25, balanced: false)
+        tree.insert(30, balanced: false)
+        tree.insert(22, balanced: false)
+        tree.insert(50, balanced: false)
+
+        XCTAssertFalse(tree.isBalanced)
         tree.balanceAll()
         XCTAssertTrue(tree.isBalanced)
     }

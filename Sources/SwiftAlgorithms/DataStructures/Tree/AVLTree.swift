@@ -113,10 +113,18 @@ public struct AVLTree<T: Comparable> {
         }
     }
 
+    // could be better
     mutating func balanceAll() {
-        while !root!.isBalanced {
-            balance()
+        var values = [T]()
+        
+        root?.traverseInOrder { values.append($0.value) }
+        root = nil
+
+        values.forEach {
+            insert($0)
         }
+
+        balance()
     }
 
     public func rightRotation(_ node: AVLTreeNode<T>?) -> AVLTreeNode<T>? {
