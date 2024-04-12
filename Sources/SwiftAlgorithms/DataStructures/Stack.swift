@@ -6,7 +6,15 @@ public struct Stack<T> {
     }
 
     public var isEmpty: Bool {
-        peek() == nil
+        peek == nil
+    }
+
+    public var size: Bool {
+        store.isEmpty
+    }
+
+    public var peek: T? {
+        store.last
     }
 
     public mutating func push(_ value: T) {
@@ -16,11 +24,6 @@ public struct Stack<T> {
     @discardableResult
     public mutating func pop() -> T {
         return store.removeLast()
-    }
-
-    @discardableResult
-    public func peek() -> T? {
-        return store.last
     }
 
     public func show() {

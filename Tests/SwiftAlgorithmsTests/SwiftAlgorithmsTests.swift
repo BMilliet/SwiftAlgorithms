@@ -24,7 +24,7 @@ final class SwiftAlgorithmsTests: XCTestCase {
                 }
 
                 if x == ")" {
-                    if stack.peek() == "(" {
+                    if stack.peek == "(" {
                         stack.pop()
                     } else {
                         stack.push(x)

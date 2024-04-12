@@ -1,19 +1,19 @@
 import Foundation
 
-public class Node<T: Comparable>: Equatable, Comparable {
+public class DoublyNode<T: Comparable>: Equatable, Comparable {
 
     let id: UUID = UUID()
     public var value: T
-    public var next: Node?
-    public var parent: Node?
+    public var next: DoublyNode?
+    public var parent: DoublyNode?
 
-    public init(_ value: T, next: Node? = nil, parent: Node? = nil) {
+    public init(_ value: T, next: DoublyNode? = nil, parent: DoublyNode? = nil) {
         self.value = value
         self.next = next
         self.parent = parent
     }
 
-    public static func ==(lhs: Node, rhs: Node) -> Bool {
+    public static func ==(lhs: DoublyNode, rhs: DoublyNode) -> Bool {
         return lhs.id == rhs.id
     }
 
@@ -28,7 +28,7 @@ public class Node<T: Comparable>: Equatable, Comparable {
         )
     }
 
-    public static func < (lhs: Node<T>, rhs: Node<T>) -> Bool {
+    public static func < (lhs: DoublyNode<T>, rhs: DoublyNode<T>) -> Bool {
         return lhs.value > rhs.value
     }
 }

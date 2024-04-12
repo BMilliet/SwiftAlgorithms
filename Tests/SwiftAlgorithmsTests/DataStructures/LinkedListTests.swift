@@ -2,175 +2,104 @@ import XCTest
 @testable import SwiftAlgorithms
 
 final class LinkedListTests: XCTestCase {
-
-    func test_remove_occurences() throws {
+    func test_push() {
         let list = LinkedList<Int>()
 
-        list.push(4)
-        list.push(2)
-        list.push(2)
+        XCTAssertTrue(list.isEmpty)
+        XCTAssertNil(list.head)
+        XCTAssertNil(list.tail)
+
         list.push(1)
+
+        XCTAssertEqual(list.head?.value, 1)
+        XCTAssertEqual(list.tail?.value, 1)
+
+        list.push(2)
         list.push(3)
-        list.push(2)
-        list.push(2)
 
-        XCTAssertEqual(4, list.removeAllOccurrences(2))
 
-        var current = list.head
-        while current != list.tail && current != nil {
-            XCTAssertNotEqual(2, current?.value)
-            current = current?.next
-        }
-
-        XCTAssertEqual(3, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
+        XCTAssertEqual(list.head?.value, 3)
+        XCTAssertEqual(list.tail?.value, 1)
     }
 
-    func test_merge_linkedLists() throws {
-        let list  = LinkedList<Int>()
-        let list2 = LinkedList<Int>()
-
-        list.push(4)
-        list.push(2)
-        list2.push(3)
-        list2.push(1)
-
-        list.merge(list2)
-
-        var current = list.head
-        var prev: Node<Int>? = nil
-        var counter = 1
-        while current != list.tail && current != nil {
-            XCTAssertEqual(counter, current?.value)
-            XCTAssertEqual(prev, current?.parent)
-            prev = current
-            current = current?.next
-            counter += 1
-        }
-
-        XCTAssertEqual(1, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
-    }
-    
-    func test_merge_empty_linkedLists() throws {
-        let list  = LinkedList<Int>()
-        let list2 = LinkedList<Int>()
-
-        list2.push(4)
-        list2.push(3)
-        list2.push(2)
-        list2.push(1)
-
-        list.merge(list2)
-
-        var current = list.head
-        var prev: Node<Int>? = nil
-        var counter = 1
-        while current != list.tail && current != nil {
-            XCTAssertEqual(counter, current?.value)
-            XCTAssertEqual(prev, current?.parent)
-            prev = current
-            current = current?.next
-            counter += 1
-        }
-
-        XCTAssertEqual(1, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
-    }
-
-    func test_reverse_linedList() throws {
+    func test_append() {
         let list = LinkedList<Int>()
 
-        list.push(1)
-        list.push(2)
-        list.push(3)
-        list.push(4)
+        XCTAssertTrue(list.isEmpty)
+        XCTAssertNil(list.head)
+        XCTAssertNil(list.tail)
 
-        list.reversed()
+        list.append(1)
 
-        var current = list.head
-        var prev: Node<Int>? = nil
-        var counter = 1
-        while current != list.tail && current != nil {
-            XCTAssertEqual(counter, current?.value)
-            XCTAssertEqual(prev, current?.parent)
-            prev = current
-            current = current?.next
-            counter += 1
-        }
+        XCTAssertEqual(list.head?.value, 1)
+        XCTAssertEqual(list.tail?.value, 1)
 
-        XCTAssertEqual(1, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
+        list.append(2)
+        list.append(3)
+
+        XCTAssertEqual(list.head?.value, 1)
+        XCTAssertEqual(list.tail?.value, 3)
     }
 
-    func test_get_middle() throws {
+    func test_findByIndex_and_insertAfter() {
         let list = LinkedList<Int>()
 
-        list.push(1)
-        list.push(2)
-        list.push(3)
-        list.push(4)
+        list.append(1)
+        list.append(2)
+        list.append(3)
 
-        XCTAssertEqual(2, list.middle()?.value)
+        let two = list.node(i: 1)
+        XCTAssertEqual(two?.value, 2)
+        XCTAssertEqual(list.node(i: 0)?.value, 1)
+        XCTAssertEqual(list.node(i: 2)?.value, 3)
 
-        list.push(5)
+        list.insert(v: 99, after: two!)
+        XCTAssertEqual(list.node(i: 2)?.value, 99)
 
-        XCTAssertEqual(3, list.middle()?.value)
+        list.insert(v: 100, after: list.tail!)
+
+        XCTAssertEqual(list.tail?.value, 100)
     }
 
-    func test_basic_linkedLists() throws {
+    func test_pop() {
         let list = LinkedList<Int>()
-        list.push(4)
 
-        XCTAssertEqual(4, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
-        XCTAssertNil(list.head?.parent)
+        list.append(1)
+        list.append(2)
+        list.append(3)
 
-        list.push(3)
+        XCTAssertEqual(list.pop()?.value, 1)
+        XCTAssertEqual(list.pop()?.value, 2)
+        XCTAssertEqual(list.pop()?.value, 3)
+    }
 
-        XCTAssertEqual(3, list.headValue)
-        XCTAssertEqual(4, list.tailValue)
+    func test_removeLast() {
+        let list = LinkedList<Int>()
 
-        XCTAssertEqual(list.headValue, list.tail?.parent?.value)
+        list.append(1)
+        list.append(2)
+        list.append(3)
 
-        list.append(6)
+        XCTAssertEqual(list.tail?.value, 3)
+        XCTAssertEqual(list.removeLast()?.value, 3)
+        XCTAssertEqual(list.tail?.value, 2)
+        XCTAssertEqual(list.removeLast()?.value, 2)
+        XCTAssertEqual(list.tail?.value, 1)
+        XCTAssertEqual(list.removeLast()?.value, 1)
+        XCTAssertNil(list.head)
+        XCTAssertNil(list.tail)
+    }
 
-        XCTAssertEqual(3, list.headValue)
-        XCTAssertEqual(6, list.tailValue)
+    func test_removeAfter() {
+        let list = LinkedList<Int>()
 
-        list.push(2)
-        list.push(1)
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
 
-        let temp = list.find(value: 4)!
-        list.insert(5, after: temp)
-
-        XCTAssertEqual(5, temp.next!.value)
-        XCTAssertEqual(3, temp.parent!.value)
-
-        var current = list.head
-        var prev: Node<Int>? = nil
-        var counter = 1
-        while current != list.tail && current != nil {
-            XCTAssertEqual(counter, current?.value)
-            XCTAssertEqual(prev, current?.parent)
-            prev = current
-            current = current?.next
-            counter += 1
-        }
-
-        XCTAssertEqual(6, counter)
-
-        let last = list.tail
-
-        XCTAssertEqual(last, list.removeLast())
-        XCTAssertEqual(5, list.tailValue)
-
-        let oldHead = list.head
-
-        XCTAssertEqual(oldHead, list.pop())
-        XCTAssertEqual(2, list.headValue)
-        XCTAssertNotNil(list.removeWhere(5))
-        XCTAssertNotNil(list.removeAt(1))
-        XCTAssertNotNil(list.removeAt(0))
+        XCTAssertEqual(list.remove(after: list.node(i: 0)!)?.value, 2)
+        XCTAssertEqual(list.remove(after: list.node(i: 1)!)?.value, 4)
+        XCTAssertEqual(list.tail?.value, 3)
     }
 }

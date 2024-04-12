@@ -11,10 +11,10 @@ final class StackTests: XCTestCase {
         XCTAssertEqual(3, stack.pop())
         XCTAssertEqual(2, stack.pop())
 
-        XCTAssertEqual(1, stack.peek())
+        XCTAssertEqual(1, stack.peek)
         XCTAssertEqual(1, stack.pop())
 
         XCTAssertTrue(stack.isEmpty)
-        XCTAssertNil(stack.peek())
+        XCTAssertNil(stack.peek)
     }
 }

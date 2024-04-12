@@ -1,6 +1,6 @@
-public class LinkedList<T: Comparable> {
-    public var head: Node<T>?
-    public var tail: Node<T>?
+public class DoublyLinkedList<T: Comparable> {
+    public var head: DoublyNode<T>?
+    public var tail: DoublyNode<T>?
 
     public init() {
     }
@@ -18,12 +18,12 @@ public class LinkedList<T: Comparable> {
     }
 
     public func push(_ value: T) {
-        let node = Node(value)
+        let node = DoublyNode(value)
         push(node)
     }
 
     public func append(_ value: T) {
-        let node = Node(value)
+        let node = DoublyNode(value)
 
         guard let tail = tail else {
             setOneNode(node)
@@ -36,7 +36,7 @@ public class LinkedList<T: Comparable> {
         old.next = node
     }
 
-    public func middle() -> Node<T>? {
+    public func middle() -> DoublyNode<T>? {
         var slow = head
         var fast = head
 
@@ -48,7 +48,7 @@ public class LinkedList<T: Comparable> {
         return slow
     }
 
-    public func merge(_ list: LinkedList<T>) {
+    public func merge(_ list: DoublyLinkedList<T>) {
 
         // nothing to merge
         if list.head == nil {
@@ -62,7 +62,7 @@ public class LinkedList<T: Comparable> {
             return
         }
 
-        var index = [Node<T>]()
+        var index = [DoublyNode<T>]()
 
         var current = head
         while current != nil {
@@ -90,35 +90,36 @@ public class LinkedList<T: Comparable> {
         current?.next = nil
     }
 
-    public func insert(_ value: T, after: Node<T>) {
-        let node = Node(value)
-
-        var current = self.head
-
-        if after == tail {
-            self.append(value)
+    public func insert(_ value: T, after node: DoublyNode<T>) {
+        if node == tail {
+            append(value)
             return
         }
 
-        while current != tail && current != nil {
-            if current == after {
-                node.parent = current
-                node.next = current?.next
-                current?.next?.parent = node
-                current?.next = node
-                return
+        let nextNode = node.next
+        let newNode = DoublyNode(value, next: nextNode, parent: node)
+        node.next = newNode
+        nextNode?.parent = newNode
+    }
+
+    public func node(index: Int) -> DoublyNode<T>? {
+        var curr = head
+        var i = 0
+
+        while curr != nil {
+            if index == i {
+                return curr
             }
-
-            current = current?.next
+            i += 1
+            curr = curr?.next
         }
-
-        print("Could not find node => \(after.id)")
+        return nil
     }
 
     public func reversed() {
 
         var current = self.tail
-        var prev: Node<T>? = nil
+        var prev: DoublyNode<T>? = nil
         self.head = current
 
         while current != nil {
@@ -151,7 +152,7 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
-    public func pop() -> Node<T>? {
+    public func pop() -> DoublyNode<T>? {
         let old = self.head
         let next = self.head?.next
 
@@ -167,7 +168,7 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
-    public func removeFirst() -> Node<T>? {
+    public func removeFirst() -> DoublyNode<T>? {
         if head == nil {
             return nil
         }
@@ -180,7 +181,7 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
-    public func removeLast() -> Node<T>? {
+    public func removeLast() -> DoublyNode<T>? {
         let old = self.tail
 
         if self.head == self.tail {
@@ -197,7 +198,7 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
-    public func removeAt(_ index: Int) -> Node<T>? {
+    public func removeAt(_ index: Int) -> DoublyNode<T>? {
         var current = self.head
         var counter = 0
 
@@ -218,7 +219,7 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
-    public func removeWhere(_ value: T) -> Node<T>? where T: Equatable {
+    public func removeWhere(_ value: T) -> DoublyNode<T>? where T: Equatable {
         guard let node = find(value: value) else {
             return nil
         }
@@ -227,7 +228,7 @@ public class LinkedList<T: Comparable> {
         return node
     }
 
-    public func remove(_ node: Node<T>) {
+    public func remove(_ node: DoublyNode<T>) {
         if node == self.head {
             head = node.next
             node.next?.parent = nil
@@ -243,7 +244,7 @@ public class LinkedList<T: Comparable> {
         node.next = nil
     }
 
-    public func find(value: T) -> Node<T>? where T: Equatable {
+    public func find(value: T) -> DoublyNode<T>? where T: Equatable {
         var current = head
 
         if self.head?.value == value {
@@ -272,7 +273,7 @@ public class LinkedList<T: Comparable> {
         }
     }
 
-    private func push(_ node: Node<T>) {
+    private func push(_ node: DoublyNode<T>) {
         guard let head = head else {
             setOneNode(node)
             return
@@ -284,7 +285,7 @@ public class LinkedList<T: Comparable> {
         old.parent = node
     }
 
-    private func setOneNode(_ node: Node<T>) {
+    private func setOneNode(_ node: DoublyNode<T>) {
         self.tail = node
         self.head = node
     }

@@ -8,7 +8,7 @@ public class QueueLinkedList<T: Comparable>: Queue {
         list.head?.value
     }
 
-    private var list = LinkedList<T>()
+    private var list = DoublyLinkedList<T>()
 
     public init() {}
 

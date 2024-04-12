@@ -39,11 +39,13 @@ public class AVLTreeNode<T: Equatable>: Equatable {
     }
 
     public func getHeight() -> Int {
-        if hasChild {
-            return max(rightChild?.getHeight() ?? 0, leftChild?.getHeight() ?? 0) + 1
+        let height = if hasChild {
+            max(rightChild?.getHeight() ?? 0, leftChild?.getHeight() ?? 0) + 1
         } else {
-            return 1
+            1
         }
+
+        return height
     }
 
     public func addLeft(_ node: AVLTreeNode) {
