@@ -158,4 +158,23 @@ final class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.head?.value, 3)
         XCTAssertEqual(list.tail?.value, 1)
     }
+
+    func test_mergeLinkedList() {
+        var list1 = LinkedList<Int>()
+        list1.append(1)
+        list1.append(4)
+        list1.append(10)
+        list1.append(11)
+
+        var list2 = LinkedList<Int>()
+        list2.append(1)
+        list2.append(2)
+        list2.append(3)
+        list2.append(6)
+
+        list1.merge(list2)
+
+        let expected = [1,1,2,3,4,6,10,11]
+        XCTAssertEqual(expected, list1.values())
+    }
 }

@@ -116,36 +116,19 @@ public class LinkedList<T: Comparable> {
     }
 
     public func reverse() {
-        if head?.next === tail {
-            let oldHead = head
-            oldHead?.next = nil
-            head = tail
-            head?.next = oldHead
-            tail = oldHead
-            return
+        tail = head
+        var prev = head
+        var current = head?.next
+        prev?.next = nil
+
+        while current != nil {
+            let next = current?.next
+            current?.next = prev
+            prev = current
+            current = next
         }
-
-        var mark = tail
-        var current = head
-
-        while mark !== head || current == nil {
-
-            if current?.next === mark {
-                // found mark revert reference
-                mark?.next = current
-                current?.next = nil
-                mark = current
-                // reset
-                current = head
-                continue
-            }
-
-            current = current?.next
-        }
-
-        let oldHead = head
-        head = tail
-        tail = oldHead
+        
+        head = prev
     }
 
     public func removeAllOccurrences(of v: T) {
@@ -165,6 +148,39 @@ public class LinkedList<T: Comparable> {
                 }
             }
             cur = cur?.next
+        }
+    }
+
+    public func values() -> [T] {
+        var arr = [T]()
+
+        var current = head
+
+        while current != nil {
+            if let v = current?.value {
+                arr.append(v)
+            }
+            current = current?.next
+        }
+
+        return arr
+    }
+
+    public func merge(_ secondList: LinkedList) {
+        // do something
+
+        var current1 = head
+        var current2 = secondList.head
+
+        while current1 != nil && current2 != nil {
+
+            if current1!.value >= current2!.value {
+
+            }
+
+            // loop
+            current1 = current1?.next
+            current2 = current2?.next
         }
     }
 }
