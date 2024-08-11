@@ -166,22 +166,60 @@ public class LinkedList<T: Comparable> {
         return arr
     }
 
-    public func merge(_ secondList: LinkedList) {
-        // do something
+    public func mergeSorted(_ secondList: LinkedList) {
 
-        var current1 = head
-        var current2 = secondList.head
-
-        while current1 != nil && current2 != nil {
-
-            if current1!.value >= current2!.value {
-
-            }
-
-            // loop
-            current1 = current1?.next
-            current2 = current2?.next
+        guard !isEmpty else {
+            return
         }
+
+        guard !secondList.isEmpty else {
+            return
+        }
+
+        var left = head
+        var right = secondList.head
+
+        while left != nil || right != nil {
+
+            if left!.value <= right!.value {
+                
+                guard let next = left?.next else {
+                    left?.next = right
+                    break
+                }
+
+                if next.value > right!.value {
+                    let nextRight = right?.next
+                    right?.next = left?.next
+                    left?.next = right
+
+                    // loop both
+                    left = left?.next
+                    right = nextRight
+                    if nextRight == nil { break }
+                    continue
+                } else {
+                    // loop left only
+                    left = left?.next
+                    continue
+                }
+
+            } else {
+                left = left?.next
+            }
+        }
+
+        adjustTail()
+    }
+
+    private func adjustTail() {
+        var current = head
+
+        while current != nil {
+            tail = current
+            current = current?.next
+        }
+
     }
 }
 
