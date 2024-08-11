@@ -159,7 +159,7 @@ final class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.tail?.value, 1)
     }
 
-    func test_mergeSorted() {
+    func test_mergeSorted1() {
         var list1 = LinkedList<Int>()
         list1.append(1)
         list1.append(4)
@@ -171,12 +171,35 @@ final class LinkedListTests: XCTestCase {
         list2.append(2)
         list2.append(3)
         list2.append(6)
+        list2.append(20)
 
         list1.mergeSorted(list2)
 
-        let expected = [1,1,2,3,4,6,10,11]
+        let expected = [1,1,2,3,4,6,10,11,20]
         XCTAssertEqual(expected, list1.values())
         XCTAssertEqual(list1.headValue, 1)
-        XCTAssertEqual(list1.tailValue, 11)
+        XCTAssertEqual(list1.tailValue, 20)
+    }
+
+    func test_mergeSorted2() {
+        let list1 = LinkedList<Int>()
+        list1.append(2)
+        list1.append(4)
+        list1.append(10)
+        list1.append(11)
+
+        let list2 = LinkedList<Int>()
+        list2.append(1)
+        list2.append(2)
+        list2.append(3)
+        list2.append(6)
+        list2.append(20)
+
+        list1.mergeSorted(list2)
+
+        let expected = [1,2,2,3,4,6,10,11,20]
+        XCTAssertEqual(expected, list1.values())
+        XCTAssertEqual(list1.headValue, 1)
+        XCTAssertEqual(list1.tailValue, 20)
     }
 }

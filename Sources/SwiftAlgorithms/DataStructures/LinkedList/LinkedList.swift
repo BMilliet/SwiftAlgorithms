@@ -188,24 +188,31 @@ public class LinkedList<T: Comparable> {
                     break
                 }
 
-                if next.value > right!.value {
+                if next.value >= right!.value {
                     let nextRight = right?.next
                     right?.next = left?.next
                     left?.next = right
 
-                    // loop both
                     left = left?.next
                     right = nextRight
                     if nextRight == nil { break }
                     continue
                 } else {
-                    // loop left only
                     left = left?.next
                     continue
                 }
 
             } else {
-                left = left?.next
+                let nextRight = right?.next
+                let currentRight = right
+
+                currentRight?.next = left
+                if head === left {
+                    head = currentRight
+                }
+                left = currentRight
+                right = nextRight
+                if left == nil { break }
             }
         }
 
@@ -219,6 +226,66 @@ public class LinkedList<T: Comparable> {
             tail = current
             current = current?.next
         }
+
+    }
+
+    static func mergeSorted(left: LinkedList, right: LinkedList) -> LinkedList {
+        guard !left.isEmpty else {
+            return right
+        }
+
+        guard !right.isEmpty else {
+            return left
+        }
+
+        var newHead: Node<T>?
+
+        // 1
+        var tail: Node<T>?
+        var currentLeft = left.head
+        var currentRight = right.head
+        // 2
+        if let leftNode = currentLeft, let rightNode = currentRight {
+            if leftNode.value < rightNode.value {
+                newHead = leftNode
+                currentLeft = leftNode.next
+            } else {
+                newHead = rightNode
+                currentRight = rightNode.next
+            }
+            tail = newHead
+        }
+
+        // 1
+        while let leftNode = currentLeft, let rightNode = currentRight {
+            // 2
+            if leftNode.value < rightNode.value {
+                tail?.next = leftNode
+                currentLeft = leftNode.next
+            } else {
+                tail?.next = rightNode
+                currentRight = rightNode.next
+            }
+            tail = tail?.next
+        }
+
+        if let leftNodes = currentLeft {
+            tail?.next = leftNodes
+        }
+
+        if let rightNodes = currentRight {
+            tail?.next = rightNodes
+        }
+
+        var list = LinkedList<T>()
+        list.head = newHead
+        list.tail = {
+            while let next = tail?.next {
+                tail = next
+            }
+            return tail
+        }()
+        return list
 
     }
 }
