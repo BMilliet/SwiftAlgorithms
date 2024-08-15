@@ -79,6 +79,22 @@ public class LinkedList<T: Comparable> {
     }
 
     @discardableResult
+    public func removeFirst() -> Node<T>? {
+        guard let currentHead = head else {
+            return nil
+        }
+
+        guard let next = currentHead.next else {
+            head = nil
+            tail = nil
+            return currentHead
+        }
+
+        head = next
+        return currentHead
+    }
+
+    @discardableResult
     public func insert(v: T, after node: Node<T>) -> Node<T>? {
         if node === tail {
             append(v)
@@ -277,7 +293,7 @@ public class LinkedList<T: Comparable> {
             tail?.next = rightNodes
         }
 
-        var list = LinkedList<T>()
+        let list = LinkedList<T>()
         list.head = newHead
         list.tail = {
             while let next = tail?.next {

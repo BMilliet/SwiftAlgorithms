@@ -8,7 +8,7 @@ public class QueueLinkedList<T: Comparable>: Queue {
         list.head?.value
     }
 
-    private var list = DoublyLinkedList<T>()
+    private var list = LinkedList<T>()
 
     public init() {}
 
@@ -25,6 +25,6 @@ public class QueueLinkedList<T: Comparable>: Queue {
     }
 
     public func reverse() {
-        list.reversed()
+        list.reverse()
     }
 }
